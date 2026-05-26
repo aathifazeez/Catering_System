@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM &amp; Loyalty Management — CaterPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Force Admin Auth Check -->
+  <script>
+    const u = localStorage.getItem('caterpro_user');
+    if (!u || JSON.parse(u).role !== 'admin') {
+      window.location.href = 'login.html?msg=admin_only';
+    }
+  </script>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="brand-icon">✦</span>
+      <div>
+        <div class="brand-name">CaterPro</div>
+        <div class="brand-sub">Management System</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="admin-dashboard.html" class="nav-item" data-page="admin-dashboard.html">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="admin-customers.html" class="nav-item active" data-page="admin-customers.html">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg>
+        CRM &amp; Loyalty
+      </a>
+      <a href="admin-menu.html" class="nav-item" data-page="admin-menu.html">
+        <svg viewBox="0 0 24 24"><path d="M3 3h18v4H3z"/><path d="M3 11h18v4H3z"/><path d="M3 19h18v2H3z"/></svg>
+        Menu Items
+      </a>
+      <a href="admin-orders.html" class="nav-item" data-page="admin-orders.html">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
+        Orders
+      </a>
+      <a href="admin-billing.html" class="nav-item" data-page="admin-billing.html">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Billing
+      </a>
+      <a href="admin-inventory.html" class="nav-item" data-page="admin-inventory.html">
+        <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4 8 4 8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg>
+        Inventory
+      </a>
+      <a href="admin-reports.html" class="nav-item" data-page="admin-reports.html">
+        <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        Reports &amp; Charts
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">A</div>
+        <div>
+          <div class="user-name">Admin</div>
+          <div class="user-role">Catering Manager</div>
+        </div>
+      </div>
+      <button class="btn-ghost" style="width:100%; margin-top:10px; padding:6px;" onclick="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main" id="main">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="page-title" id="pageTitle">CRM &amp; Loyalty Registry</div>
+      </div>
+      <div class="topbar-right" style="display:flex; align-items:center; gap:20px;">
+        <a href="index.html" class="btn-ghost" style="padding:6px 12px; font-size:11px;">View Public Site</a>
+        <div class="date-display" id="dateDisplay"></div>
+      </div>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <div style="padding: 28px; display:flex; flex-direction:column; gap:24px; overflow-y:auto; flex:1;">
+      
+      <div class="page-actions">
+        <input class="search-input" type="text" placeholder="Search customers…" id="customerSearch" />
+        <button class="btn-primary" id="addCustomerBtn">+ Add Customer Profile</button>
+      </div>
+
+      <div class="crm-layout">
+        <div class="card">
+          <table class="data-table" id="customerTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Loyalty Points</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="customerBody"><tr><td colspan="6" class="loading">Loading customer records…</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="card crm-panel">
+          <h3 class="crm-panel-title">CRM Announcement Panel</h3>
+          <p class="crm-panel-desc">Broadcast simulated loyalty discounts, event scheduling, or catering menu notices to customer accounts.</p>
+          
+          <div class="form-group">
+            <label>Target Segment</label>
+            <select class="form-control" id="notif-target">
+              <option value="all">All Registered Customers</option>
+              <option value="loyalty">Loyalty Club (points &gt; 50)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Communication Channel</label>
+            <select class="form-control" id="notif-type">
+              <option value="SMS">SMS Notification</option>
+              <option value="Email">Email Broadcast</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Message Content</label>
+            <textarea class="form-control crm-textarea" id="notif-message" rows="3" placeholder="Type notification content..."></textarea>
+          </div>
+          
+          <button class="btn-primary btn-full" id="sendNotifBtn">✉ Send Announcement</button>
+          
+          <div class="crm-logs-section">
+            <h4 class="crm-logs-title">System Activity Logs</h4>
+            <div id="notif-logs" class="crm-logs-list">No announcements dispatched yet.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── MODALS ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Title</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="js/shared.js"></script>
+  <script src="js/admin-customers.js"></script>
+</body>
+</html>

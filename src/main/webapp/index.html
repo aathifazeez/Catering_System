@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CaterPro — Elegant Catering Services for Corporate Occasions, Weddings, and Private Celebrations." />
+  <title>CaterPro — Premium Catering Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="public-body">
+
+  <!-- ── PUBLIC HEADER ── -->
+  <header class="public-header">
+    <a href="index.html" class="public-brand">
+      <span class="public-brand-icon">✦</span>
+      <span class="public-brand-name">CaterPro</span>
+    </a>
+    <nav class="public-nav">
+      <a href="index.html" class="public-nav-link active">Home</a>
+      <a href="menu.html" class="public-nav-link">Our Menu</a>
+      <a href="book.html" class="public-nav-link">Book Catering</a>
+      <span id="header-auth" style="display:flex; align-items:center;">
+        <!-- Filled dynamically by shared.js -->
+      </span>
+    </nav>
+  </header>
+
+  <!-- ── HERO SECTION ── -->
+  <section class="public-hero">
+    <div class="hero-content">
+      <div class="hero-tag">Exquisite Taste &amp; Service</div>
+      <h1 class="hero-title">Elevate Your Next Event with <span>CaterPro</span></h1>
+      <p class="hero-desc">From intimate private dinners and birthdays to grand corporate events and fairytale weddings. We curate premium menus tailored to your taste, handled with absolute culinary perfection.</p>
+      <div class="hero-actions">
+        <a href="book.html" class="btn-primary" style="padding:14px 28px; font-size:14px;">Book Catering Now</a>
+        <a href="menu.html" class="btn-ghost" style="padding:14px 28px; font-size:14px;">Explore Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OCCASIONS ── -->
+  <section class="public-section">
+    <div class="section-header">
+      <div class="section-tag">Perfect for Any Event</div>
+      <h2 class="section-title">Catering Made for Every Occasion</h2>
+    </div>
+    <div class="occasions-grid">
+      <div class="occasion-card">
+        <div class="occasion-img" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=600&auto=format&fit=crop');">
+          <div class="occasion-img-overlay"></div>
+        </div>
+        <div class="occasion-body">
+          <h3 class="occasion-name">Corporate Events</h3>
+          <p class="occasion-desc">Impression-making lunch buffets, board meetings, product launches, and full-day corporate seminars. Fast, prompt service with professional presentation.</p>
+        </div>
+      </div>
+      <div class="occasion-card">
+        <div class="occasion-img" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop');">
+          <div class="occasion-img-overlay"></div>
+        </div>
+        <div class="occasion-body">
+          <h3 class="occasion-name">Elegant Weddings</h3>
+          <p class="occasion-desc">Fairytale fine dining, gorgeous customized multi-course sit-downs, and grand desserts to suit your special day. Exceptional service from start to finish.</p>
+        </div>
+      </div>
+      <div class="occasion-card">
+        <div class="occasion-img" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=600&auto=format&fit=crop');">
+          <div class="occasion-img-overlay"></div>
+        </div>
+        <div class="occasion-body">
+          <h3 class="occasion-name">Private Celebrations</h3>
+          <p class="occasion-desc">Birthday parties, family anniversaries, and festive social gatherings. Let us handle all details, ingredients, and cleanup while you celebrate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LOYALTY CLUB CARD ── -->
+  <section class="public-section" style="margin-top:0;">
+    <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px; border-color:var(--border-gold); background:linear-gradient(135deg, var(--bg-surface), rgba(201,168,76,0.05));">
+      <span style="font-size:32px; color:var(--gold); margin-bottom:12px;">💎</span>
+      <h3 style="font-family:var(--font-serif); font-size:26px; color:var(--gold-light); margin-bottom:12px;">CaterPro Loyalty Club</h3>
+      <p style="max-width:600px; color:var(--text-secondary); font-size:14px; margin-bottom:20px; line-height:1.6;">
+        Earn <strong>1 Loyalty Point</strong> for every 100 LKR spent on paid invoices. 
+        Points can be redeemed instantly for massive discounts! <strong>1 Point = 10 LKR Discount</strong> on your next bookings.
+      </p>
+      <a href="login.html" class="btn-primary">Join / Login to Club</a>
+    </div>
+  </section>
+
+  <!-- ── PUBLIC FOOTER ── -->
+  <footer class="public-footer">
+    <div class="footer-logo">CaterPro</div>
+    <div class="footer-links">
+      <a href="index.html" class="public-nav-link">Home</a>
+      <a href="menu.html" class="public-nav-link">Our Menu</a>
+      <a href="book.html" class="public-nav-link">Book Catering</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 CaterPro American Food Co. All Rights Reserved.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="js/shared.js"></script>
+</body>
+</html>

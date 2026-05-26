@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign In or register for CaterPro Loyalty Club." />
+  <title>Login / Sign Up — CaterPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="public-body">
+
+  <!-- ── PUBLIC HEADER ── -->
+  <header class="public-header">
+    <a href="index.html" class="public-brand">
+      <span class="public-brand-icon">✦</span>
+      <span class="public-brand-name">CaterPro</span>
+    </a>
+    <nav class="public-nav">
+      <a href="index.html" class="public-nav-link">Home</a>
+      <a href="menu.html" class="public-nav-link">Our Menu</a>
+      <a href="book.html" class="public-nav-link">Book Catering</a>
+      <span id="header-auth" style="display:flex; align-items:center;">
+        <!-- Filled dynamically by shared.js -->
+      </span>
+    </nav>
+  </header>
+
+  <!-- ── LOGIN CARD CONTAINER ── -->
+  <main class="main">
+    <div class="login-container">
+      <div class="login-card">
+        
+        <div class="login-logo">
+          <span class="login-logo-icon">✦</span>
+          <h2 class="login-logo-title">Welcome to CaterPro</h2>
+        </div>
+
+        <div class="login-tabs" id="loginTabs">
+          <div class="login-tab active" data-role="customer">Customer Login</div>
+          <div class="login-tab" data-role="signup">Join Club (Sign Up)</div>
+          <div class="login-tab" data-role="admin">Admin Login</div>
+        </div>
+
+        <!-- Form 1: Customer Login Dropdown -->
+        <div class="login-form-content" id="form-customer">
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:18px; line-height:1.5;">Select your registered profile below to login instantly and access your bookings and points.</p>
+          <form onsubmit="event.preventDefault(); submitCustomerLogin();">
+            <div class="form-group" style="margin-bottom:20px;">
+              <label>Select Customer Profile</label>
+              <select class="form-control" id="customer-select">
+                <option value="">Fetching customers list…</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary btn-full" style="padding:12px;">Access Account</button>
+          </form>
+        </div>
+
+        <!-- Form 2: Customer Signup -->
+        <div class="login-form-content" id="form-signup" style="display:none;">
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:18px; line-height:1.5;">Create a profile to earn points on bookings! New members instantly get <strong>10 points starting bonus</strong>!</p>
+          <form onsubmit="event.preventDefault(); submitCustomerSignup();">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label>Full Name</label>
+              <input type="text" class="form-control" id="signup-name" required placeholder="e.g. Kasun Fernando" />
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label>Email Address</label>
+              <input type="email" class="form-control" id="signup-email" required placeholder="e.g. kasun@gmail.com" />
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label>Phone Number</label>
+              <input type="tel" class="form-control" id="signup-phone" required placeholder="e.g. 0771234567" />
+            </div>
+            <div class="form-group" style="margin-bottom:20px;">
+              <label>Default Venue / Delivery Address</label>
+              <input type="text" class="form-control" id="signup-address" required placeholder="e.g. 100 Galle Road, Colombo 3" />
+            </div>
+            <button type="submit" class="btn-primary btn-full" style="padding:12px;">Register &amp; Claim 10 Points</button>
+          </form>
+        </div>
+
+        <!-- Form 3: Admin Login Form -->
+        <div class="login-form-content" id="form-admin" style="display:none;">
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:18px; line-height:1.5;">Enter administrator credentials below to access CRM, Inventory, Billing, and Reports.</p>
+          <form onsubmit="event.preventDefault(); submitAdminLogin();">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label>Email Address</label>
+              <input type="email" class="form-control" id="admin-email" value="admin@caterpro.com" required />
+            </div>
+            <div class="form-group" style="margin-bottom:20px;">
+              <label>Password</label>
+              <input type="password" class="form-control" id="admin-pass" value="admin123" required />
+            </div>
+            <button type="submit" class="btn-primary btn-full" style="padding:12px;">Login to Admin Panel</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── PUBLIC FOOTER ── -->
+  <footer class="public-footer">
+    <div class="footer-logo">CaterPro</div>
+    <div class="footer-links">
+      <a href="index.html" class="public-nav-link">Home</a>
+      <a href="menu.html" class="public-nav-link">Our Menu</a>
+      <a href="book.html" class="public-nav-link">Book Catering</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 CaterPro American Food Co. All Rights Reserved.</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="js/shared.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

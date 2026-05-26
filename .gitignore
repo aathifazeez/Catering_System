@@ -1,0 +1,45 @@
+# ─── Maven build output ───────────────────────────────────────
+target/
+
+# ─── Compiled class files ─────────────────────────────────────
+*.class
+
+# ─── Packaged artifacts ───────────────────────────────────────
+*.jar
+*.war
+*.ear
+
+# ─── macOS Finder metadata ────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ─── IntelliJ IDEA ────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ─── Eclipse ──────────────────────────────────────────────────
+.eclipse/
+.settings/
+.project
+.classpath
+bin/
+
+# ─── VS Code ──────────────────────────────────────────────────
+.vscode/
+
+# ─── NetBeans ─────────────────────────────────────────────────
+nbproject/
+nbbuild/
+nbdist/
+
+# ─── OS generated ─────────────────────────────────────────────
+Thumbs.db
+Desktop.ini
+
+# ─── Logs ─────────────────────────────────────────────────────
+*.log
+logs/
