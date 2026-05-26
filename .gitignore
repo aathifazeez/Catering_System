@@ -1,3 +1,6 @@
+# ─── Database credentials (copy db.properties.template → db.properties) ──────
+src/main/resources/db.properties
+
 # ─── Maven build output ───────────────────────────────────────
 target/
 

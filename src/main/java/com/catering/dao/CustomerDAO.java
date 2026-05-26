@@ -33,13 +33,14 @@ public class CustomerDAO {
     }
 
     public int create(Customer c) throws SQLException {
-        String sql = "INSERT INTO customers (name, email, phone, address) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO customers (name, email, phone, address, loyalty_points) VALUES (?,?,?,?,?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, c.getName());
             ps.setString(2, c.getEmail());
             ps.setString(3, c.getPhone());
             ps.setString(4, c.getAddress());
+            ps.setInt(5, c.getLoyaltyPoints());
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) return keys.getInt(1);

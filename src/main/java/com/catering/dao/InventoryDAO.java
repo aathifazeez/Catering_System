@@ -71,55 +71,27 @@ public class InventoryDAO {
     }
 
     /**
-     * Automatically deducts raw ingredients from inventory based on order items when an order is Confirmed.
+     * Automatically deducts raw ingredients from inventory when an order is Confirmed.
+     * Uses the recipe_ingredients table — no hardcoded name matching.
+     * Deduction amount = order quantity × quantity_per_serving for each ingredient.
      */
     public void deductForOrder(int orderId) throws SQLException {
-        String query = "SELECT oi.quantity, m.name AS menu_item_name " +
-                       "FROM order_items oi " +
-                       "JOIN menu_items m ON oi.item_id = m.item_id " +
-                       "WHERE oi.order_id = ?";
+        String query =
+            "SELECT oi.quantity AS order_qty, " +
+            "       r.quantity_per_serving, " +
+            "       i.name AS ingredient_name " +
+            "FROM order_items oi " +
+            "JOIN recipe_ingredients r ON oi.item_id = r.menu_item_id " +
+            "JOIN inventory i          ON r.inventory_item_id = i.item_id " +
+            "WHERE oi.order_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, orderId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int qty = rs.getInt("quantity");
-                    String itemName = rs.getString("menu_item_name").toLowerCase();
-
-                    double rice = 0;
-                    double chicken = 0;
-                    double veg = 0;
-                    double oil = 0;
-                    double sugar = 0;
-                    double flour = 0;
-
-                    if (itemName.contains("biriyani")) {
-                        rice += qty * 0.25;
-                        chicken += qty * 0.20;
-                        oil += qty * 0.05;
-                    } else if (itemName.contains("rice") || itemName.contains("curry")) {
-                        rice += qty * 0.20;
-                        veg += qty * 0.15;
-                        oil += qty * 0.03;
-                    } else if (itemName.contains("satay") || itemName.contains("chicken")) {
-                        chicken += qty * 0.15;
-                        oil += qty * 0.02;
-                    } else if (itemName.contains("rolls")) {
-                        veg += qty * 0.08;
-                        oil += qty * 0.03;
-                    } else if (itemName.contains("cake") || itemName.contains("watalappan") || itemName.contains("dessert")) {
-                        sugar += qty * 0.05;
-                        flour += qty * 0.05;
-                    }
-
-                    // Perform database updates for inventory items matching names
-                    if (rice > 0) updateStock(conn, "Rice", rice);
-                    if (chicken > 0) updateStock(conn, "Chicken", chicken);
-                    if (veg > 0) updateStock(conn, "Vegetables", veg);
-                    if (oil > 0) updateStock(conn, "Cooking Oil", oil);
-                    if (sugar > 0) updateStock(conn, "Sugar", sugar);
-                    if (flour > 0) updateStock(conn, "Flour", flour);
+                    double deductAmount = rs.getInt("order_qty") * rs.getDouble("quantity_per_serving");
+                    updateStock(conn, rs.getString("ingredient_name"), deductAmount);
                 }
             }
         }

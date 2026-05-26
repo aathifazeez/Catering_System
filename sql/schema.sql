@@ -92,6 +92,21 @@ CREATE TABLE IF NOT EXISTS inventory (
 );
 
 -- ─────────────────────────────────────────
+-- RECIPE INGREDIENTS TABLE
+-- Links each menu item to the inventory ingredients it uses,
+-- with how much of each ingredient is needed per serving.
+-- ─────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
+    id                   INT AUTO_INCREMENT PRIMARY KEY,
+    menu_item_id         INT            NOT NULL,
+    inventory_item_id    INT            NOT NULL,
+    quantity_per_serving DECIMAL(8,4)   NOT NULL,
+    UNIQUE KEY uq_recipe (menu_item_id, inventory_item_id),
+    FOREIGN KEY (menu_item_id)      REFERENCES menu_items(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (inventory_item_id) REFERENCES inventory(item_id)  ON DELETE CASCADE
+);
+
+-- ─────────────────────────────────────────
 -- SEED DATA
 -- ─────────────────────────────────────────
 INSERT INTO customers (name, email, phone, address) VALUES
@@ -121,3 +136,37 @@ INSERT INTO inventory (name, quantity, unit, min_level) VALUES
 ('Cooking Oil', 10.0,  'liters',  5),
 ('Sugar',       15.0,  'kg',      8),
 ('Flour',       20.0,  'kg',     10);
+
+-- Recipe: how much of each ingredient each menu item uses per serving
+-- Uses subquery lookups so IDs never need to be hardcoded
+INSERT INTO recipe_ingredients (menu_item_id, inventory_item_id, quantity_per_serving) VALUES
+-- Spring Rolls
+((SELECT item_id FROM menu_items WHERE name='Spring Rolls'),   (SELECT item_id FROM inventory WHERE name='Vegetables'),   0.0800),
+((SELECT item_id FROM menu_items WHERE name='Spring Rolls'),   (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0300),
+-- Chicken Satay
+((SELECT item_id FROM menu_items WHERE name='Chicken Satay'),  (SELECT item_id FROM inventory WHERE name='Chicken'),      0.1500),
+((SELECT item_id FROM menu_items WHERE name='Chicken Satay'),  (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0200),
+-- Rice & Curry
+((SELECT item_id FROM menu_items WHERE name='Rice & Curry'),   (SELECT item_id FROM inventory WHERE name='Rice'),         0.2000),
+((SELECT item_id FROM menu_items WHERE name='Rice & Curry'),   (SELECT item_id FROM inventory WHERE name='Vegetables'),   0.1500),
+((SELECT item_id FROM menu_items WHERE name='Rice & Curry'),   (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0300),
+-- Biriyani
+((SELECT item_id FROM menu_items WHERE name='Biriyani'),       (SELECT item_id FROM inventory WHERE name='Rice'),         0.2500),
+((SELECT item_id FROM menu_items WHERE name='Biriyani'),       (SELECT item_id FROM inventory WHERE name='Chicken'),      0.2000),
+((SELECT item_id FROM menu_items WHERE name='Biriyani'),       (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0500),
+-- Pasta Alfredo
+((SELECT item_id FROM menu_items WHERE name='Pasta Alfredo'),  (SELECT item_id FROM inventory WHERE name='Flour'),        0.1000),
+((SELECT item_id FROM menu_items WHERE name='Pasta Alfredo'),  (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0200),
+-- Chocolate Cake
+((SELECT item_id FROM menu_items WHERE name='Chocolate Cake'), (SELECT item_id FROM inventory WHERE name='Sugar'),        0.0500),
+((SELECT item_id FROM menu_items WHERE name='Chocolate Cake'), (SELECT item_id FROM inventory WHERE name='Flour'),        0.0500),
+-- Watalappan
+((SELECT item_id FROM menu_items WHERE name='Watalappan'),     (SELECT item_id FROM inventory WHERE name='Sugar'),        0.0500),
+((SELECT item_id FROM menu_items WHERE name='Watalappan'),     (SELECT item_id FROM inventory WHERE name='Flour'),        0.0500),
+-- Fresh Fruit Salad
+((SELECT item_id FROM menu_items WHERE name='Fresh Fruit Salad'), (SELECT item_id FROM inventory WHERE name='Sugar'),     0.0200),
+-- Garlic Bread
+((SELECT item_id FROM menu_items WHERE name='Garlic Bread'),   (SELECT item_id FROM inventory WHERE name='Flour'),        0.0800),
+((SELECT item_id FROM menu_items WHERE name='Garlic Bread'),   (SELECT item_id FROM inventory WHERE name='Cooking Oil'),  0.0150),
+-- Coleslaw
+((SELECT item_id FROM menu_items WHERE name='Coleslaw'),       (SELECT item_id FROM inventory WHERE name='Vegetables'),   0.1200);
