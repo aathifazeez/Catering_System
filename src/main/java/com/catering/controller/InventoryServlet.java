@@ -4,8 +4,8 @@ import com.catering.dao.InventoryDAO;
 import com.catering.model.InventoryItem;
 import com.google.gson.Gson;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.*;
 import java.util.List;
 

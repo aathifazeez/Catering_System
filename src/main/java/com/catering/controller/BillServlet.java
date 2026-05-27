@@ -5,8 +5,8 @@ import com.catering.model.Bill;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.*;
 import java.util.List;
 

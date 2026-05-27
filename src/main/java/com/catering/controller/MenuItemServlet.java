@@ -4,8 +4,8 @@ import com.catering.dao.MenuItemDAO;
 import com.catering.model.MenuItem;
 import com.google.gson.Gson;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.*;
 import java.util.List;
 
